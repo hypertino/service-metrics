@@ -1,5 +1,6 @@
 import com.codahale.metrics.ConsoleReporter
-import eu.inn.metrics.{ConsoleReporterModule, MetricReporter, ProcessMetrics}
+import eu.inn.metrics.modules.ConsoleReporterModule
+import eu.inn.metrics.{MetricReporter, ProcessMetrics}
 
 import scala.io.StdIn
 

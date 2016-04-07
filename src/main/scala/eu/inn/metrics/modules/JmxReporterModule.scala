@@ -1,6 +1,7 @@
-package eu.inn.metrics
+package eu.inn.metrics.modules
 
 import com.codahale.metrics.{JmxReporter, MetricRegistry}
+import eu.inn.metrics.{MetricReporter, MetricReporterImpl}
 import scaldi.Module
 
 class JmxReporterModule(prefix: String) extends Module {
