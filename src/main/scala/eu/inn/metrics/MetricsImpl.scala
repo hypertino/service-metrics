@@ -6,37 +6,35 @@ import com.codahale.metrics._
 
 import scala.collection.concurrent.TrieMap
 
-private [metrics] class MetricsImpl(prefix: String, registry: MetricRegistry) extends Metrics {
+private [metrics] class MetricsImpl(registry: MetricRegistry) extends Metrics {
   protected val gauges = TrieMap[String, ReplaceableGauge[_]]()
 
   override def counter(name: String): Counter = {
-    registry.counter(prefix + "." + name)
+    registry.counter(name)
   }
 
   override def meter(name: String): Meter = {
-    registry.meter(prefix + "." + name)
+    registry.meter(name)
   }
 
   override def histogram(name: String): Histogram = {
-    registry.histogram(prefix + "." + name)
+    registry.histogram(name)
   }
 
   override def timer(name: String): Timer = {
-    registry.timer(prefix + "." + name)
+    registry.timer(name)
   }
 
   def gauge[T](name: String, gauge: Gauge[T]): Unit = {
-    val fullName = prefix + "." + name
-    gauges.putIfAbsent(fullName, new ReplaceableGauge[T](gauge)) match {
+    gauges.putIfAbsent(name, new ReplaceableGauge[T](gauge)) match {
       case Some(existing) ⇒ existing.replaceUnderlying(gauge)
       case None ⇒ registry.register(name, gauge)
     }
   }
 
   def remove(name: String): Unit = {
-    val fullName = prefix + "." + name
     gauges.remove(name)
-    registry.remove(fullName)
+    registry.remove(name)
   }
 
   def removeAll(): Unit = {

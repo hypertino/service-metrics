@@ -11,7 +11,7 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class TestMetricsReporter extends FreeSpec with Matchers with Injectable with ScalaFutures {
-  implicit val injector = new ConsoleReporterModule("test")
+  implicit val injector = new ConsoleReporterModule
 
   "MetricsReporter should instantiate" - {
     val metrics = inject[Metrics]

@@ -4,7 +4,7 @@ import eu.inn.metrics.{Metrics, ProcessMetrics}
 
 import scala.io.StdIn
 
-object TestMain extends ConsoleReporterModule("test-service") {
+object TestMain extends ConsoleReporterModule {
 
   def main(args: Array[String]): Unit = {
     ProcessMetrics.startReporting(inject[Metrics])
