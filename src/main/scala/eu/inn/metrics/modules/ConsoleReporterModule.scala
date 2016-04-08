@@ -1,11 +1,7 @@
 package eu.inn.metrics.modules
 
-import com.codahale.metrics.{ConsoleReporter, MetricRegistry}
-import eu.inn.metrics.{MetricReporter, MetricReporterImpl}
-import scaldi.Module
+import eu.inn.metrics.loaders.{ConsoleReporterLoader, MetricsReporterLoader}
 
-class ConsoleReporterModule(prefix: String) extends Module {
-  bind [MetricRegistry] to injected[MetricRegistry]
-  bind [MetricReporter] to new MetricReporterImpl(prefix, inject[MetricRegistry])
-  bind [ConsoleReporter] to ConsoleReporter.forRegistry(inject[MetricRegistry]).build()
+class ConsoleReporterModule(prefix: String) extends MetricsModule(prefix) {
+  bind [MetricsReporterLoader] to injected[ConsoleReporterLoader]
 }

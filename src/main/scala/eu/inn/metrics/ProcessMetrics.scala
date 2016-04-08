@@ -5,7 +5,7 @@ import com.sun.management.{OperatingSystemMXBean, UnixOperatingSystemMXBean}
 import scala.collection.JavaConversions._
 
 object ProcessMetrics {
-  def startReporting(reporter: MetricReporter): Unit = {
+  def startReporting(reporter: Metrics): Unit = {
     ManagementFactory.getOperatingSystemMXBean match {
       case unix: UnixOperatingSystemMXBean ⇒
         reporter.gauge("system.fd.max")(unix.getMaxFileDescriptorCount)

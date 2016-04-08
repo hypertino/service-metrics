@@ -1,7 +1,7 @@
 import java.util.concurrent.TimeUnit
 
-import com.codahale.metrics.{ConsoleReporter, Gauge}
-import eu.inn.metrics.MetricReporter
+import com.codahale.metrics.{ConsoleReporter, Gauge, MetricRegistry}
+import eu.inn.metrics.Metrics
 import eu.inn.metrics.modules.ConsoleReporterModule
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{FreeSpec, Matchers}
@@ -14,7 +14,7 @@ class TestMetricsReporter extends FreeSpec with Matchers with Injectable with Sc
   implicit val injector = new ConsoleReporterModule("test")
 
   "MetricsReporter should instantiate" - {
-    val metrics = inject[MetricReporter]
+    val metrics = inject[Metrics]
 
     metrics.counter("counter").inc(100500)
     metrics.meter("meter").mark(15)
@@ -47,7 +47,8 @@ class TestMetricsReporter extends FreeSpec with Matchers with Injectable with Sc
       override def getValue = 3
     })
 
-    val consoleReporter = inject[ConsoleReporter]
+    val registry = inject[MetricRegistry]
+    val consoleReporter = ConsoleReporter.forRegistry(registry).build()
     consoleReporter.report()
     true shouldBe true
   }

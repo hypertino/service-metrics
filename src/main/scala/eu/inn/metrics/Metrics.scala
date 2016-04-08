@@ -4,7 +4,7 @@ import com.codahale.metrics._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait MetricReporter {
+trait Metrics {
   def counter(name: String): Counter
   def meter(name: String): Meter
   def histogram(name: String): Histogram
