@@ -6,7 +6,7 @@ import com.codahale.metrics._
 
 import scala.collection.concurrent.TrieMap
 
-private [metrics] class MetricsImpl(registry: MetricRegistry) extends Metrics {
+private [metrics] class MetricsTrackerImpl(registry: MetricRegistry) extends MetricsTracker {
   protected val gauges = TrieMap[String, ReplaceableGauge[_]]()
 
   override def counter(name: String): Counter = {

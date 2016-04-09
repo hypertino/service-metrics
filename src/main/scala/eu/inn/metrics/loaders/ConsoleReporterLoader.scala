@@ -3,10 +3,21 @@ package eu.inn.metrics.loaders
 import java.util.concurrent.TimeUnit
 
 import com.codahale.metrics.{ConsoleReporter, MetricRegistry}
+import scaldi.{Injectable, Injector}
 
-class ConsoleReporterLoader(registry: MetricRegistry) extends MetricsReporterLoader {
+import scala.concurrent.duration.Duration
+
+class ConsoleReporterLoader(period: Duration)
+                           (implicit injector: Injector) extends MetricsReporterLoader with Injectable {
+  lazy val consoleReporter = {
+    ConsoleReporter.forRegistry(inject[MetricRegistry]).build()
+  }
+
   override def run(): Unit = {
-    val consoleReporter = ConsoleReporter.forRegistry(registry).build()
-    consoleReporter.start(1, TimeUnit.MINUTES) // todo: move to config
+    if (period.isFinite) {
+      consoleReporter.start(period.toMillis, TimeUnit.MILLISECONDS)
+    } else {
+      consoleReporter.hashCode() //instantiate lazy val
+    }
   }
 }

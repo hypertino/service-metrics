@@ -1,20 +1,21 @@
 import java.util.concurrent.TimeUnit
 
-import com.codahale.metrics.{ConsoleReporter, Gauge, MetricRegistry}
-import eu.inn.metrics.Metrics
+import com.codahale.metrics.{Gauge, ScheduledReporter}
+import eu.inn.metrics.MetricsTracker
 import eu.inn.metrics.modules.ConsoleReporterModule
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{FreeSpec, Matchers}
 import scaldi.Injectable
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.concurrent.duration.Duration
 
 class TestMetricsReporter extends FreeSpec with Matchers with Injectable with ScalaFutures {
-  implicit val injector = new ConsoleReporterModule
+  implicit val injector = new ConsoleReporterModule(Duration.Undefined)
 
   "MetricsReporter should instantiate" - {
-    val metrics = inject[Metrics]
+    val metrics = inject[MetricsTracker]
 
     metrics.counter("counter").inc(100500)
     metrics.meter("meter").mark(15)
@@ -25,11 +26,11 @@ class TestMetricsReporter extends FreeSpec with Matchers with Injectable with Sc
 
     metrics.timer("timer1").update(10, TimeUnit.SECONDS)
 
-    metrics.timerOf("measure-sync") {
+    metrics.timeOf("measure-sync") {
       Thread.sleep(10)
     }
 
-    metrics.timerOfFuture("measure-async") {
+    metrics.timeOfFuture("measure-async") {
       Future {
         Thread.sleep(10)
       }
@@ -47,9 +48,8 @@ class TestMetricsReporter extends FreeSpec with Matchers with Injectable with Sc
       override def getValue = 3
     })
 
-    val registry = inject[MetricRegistry]
-    val consoleReporter = ConsoleReporter.forRegistry(registry).build()
-    consoleReporter.report()
-    true shouldBe true
+    val reporter = inject[ScheduledReporter]
+    reporter shouldNot equal (null)
+    reporter.report()
   }
 }

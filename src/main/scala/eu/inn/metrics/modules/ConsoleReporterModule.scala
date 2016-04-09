@@ -1,7 +1,15 @@
 package eu.inn.metrics.modules
 
+import com.codahale.metrics.ScheduledReporter
 import eu.inn.metrics.loaders.{ConsoleReporterLoader, MetricsReporterLoader}
 
-class ConsoleReporterModule extends MetricsModule {
-  bind [MetricsReporterLoader] to injected[ConsoleReporterLoader]
+import scala.concurrent.duration.Duration
+
+class ConsoleReporterModule(period: Duration) extends MetricsModule {
+  bind [MetricsReporterLoader] identifiedBy 'consoleMetricsReporterLoader toNonLazy new ConsoleReporterLoader(period)
+  bind [ScheduledReporter] identifiedBy 'consoleMetricsReporter to {
+    inject[MetricsReporterLoader](
+      identified by 'consoleMetricsReporterLoader
+    ).asInstanceOf[ConsoleReporterLoader].consoleReporter
+  }
 }

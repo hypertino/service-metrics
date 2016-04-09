@@ -1,10 +1,16 @@
 package eu.inn.metrics.loaders
 
 import com.codahale.metrics.{JmxReporter, MetricRegistry}
+import scaldi.{Injectable, Injector}
 
-class JmxReporterLoader(registry: MetricRegistry) extends MetricsReporterLoader {
+import scala.concurrent.duration.Duration
+
+class JmxReporterLoader(period: Duration)(implicit injector: Injector) extends MetricsReporterLoader with Injectable {
+  lazy val jmxReporter = {
+    JmxReporter.forRegistry(inject[MetricRegistry]).build()
+  }
+
   override def run(): Unit = {
-    val jmxReporter = JmxReporter.forRegistry(registry).build()
     jmxReporter.start()
   }
 }

@@ -4,7 +4,7 @@ import com.codahale.metrics._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait Metrics {
+trait MetricsTracker {
   def counter(name: String): Counter
   def meter(name: String): Meter
   def histogram(name: String): Histogram
@@ -13,7 +13,7 @@ trait Metrics {
   def remove(name: String): Unit
   def removeAll(): Unit
 
-  def timerOf[A](name: String)(f: ⇒ A): A = {
+  def timeOf[A](name: String)(f: ⇒ A): A = {
     val timerContext = timer(name).time()
     try {
       f
@@ -22,7 +22,7 @@ trait Metrics {
     }
   }
 
-  def timerOfFuture[A](name: String)(f: ⇒ Future[A])(implicit ec: ExecutionContext): Future[A] = {
+  def timeOfFuture[A](name: String)(f: ⇒ Future[A])(implicit ec: ExecutionContext): Future[A] = {
     val timerContext = timer(name).time()
     f andThen { case _ ⇒
       timerContext.close()
