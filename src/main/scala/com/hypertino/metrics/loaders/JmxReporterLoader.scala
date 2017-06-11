@@ -1,4 +1,4 @@
-package eu.inn.metrics.loaders
+package com.hypertino.metrics.loaders
 
 import com.codahale.metrics.{JmxReporter, MetricRegistry}
 import scaldi.{Injectable, Injector}

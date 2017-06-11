@@ -1,8 +1,8 @@
 import java.util.concurrent.TimeUnit
 
 import com.codahale.metrics.{Gauge, ScheduledReporter}
-import eu.inn.metrics.MetricsTracker
-import eu.inn.metrics.modules.ConsoleReporterModule
+import com.hypertino.metrics.MetricsTracker
+import com.hypertino.metrics.modules.ConsoleReporterModule
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{FreeSpec, Matchers}
 import scaldi.Injectable

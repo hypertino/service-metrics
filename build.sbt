@@ -1,18 +1,20 @@
-import sbt.Keys._
-
 name := "service-metrics"
 
-version := "0.2"
+version := "0.3-SNAPSHOT"
 
-organization := "eu.inn"
+organization := "com.hypertino"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.1"
 
-crossScalaVersions := Seq("2.11.8")
+crossScalaVersions := Seq("2.12.1", "2.11.8")
 
 libraryDependencies ++= Seq(
-  "io.dropwizard.metrics" % "metrics-core" % "3.1.0",
-  "org.scaldi" %% "scaldi" % "0.5.6",
+  "io.dropwizard.metrics" % "metrics-core" % "3.2.2",
+  "org.scaldi" %% "scaldi" % "0.5.8",
   "org.slf4j" % "slf4j-api" % "1.7.21",
-  "org.scalatest" %% "scalatest" % "2.2.1" % "test"
+  "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0" % "test"
+)
+
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("public")
 )

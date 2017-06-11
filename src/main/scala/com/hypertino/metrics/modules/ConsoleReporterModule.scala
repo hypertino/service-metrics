@@ -1,7 +1,7 @@
-package eu.inn.metrics.modules
+package com.hypertino.metrics.modules
 
 import com.codahale.metrics.ScheduledReporter
-import eu.inn.metrics.loaders.{ConsoleReporterLoader, MetricsReporterLoader}
+import com.hypertino.metrics.loaders.{ConsoleReporterLoader, MetricsReporterLoader}
 
 import scala.concurrent.duration.Duration
 

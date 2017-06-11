@@ -1,7 +1,7 @@
-package eu.inn.metrics.modules
+package com.hypertino.metrics.modules
 
 import com.codahale.metrics.MetricRegistry
-import eu.inn.metrics.{MetricsTracker, MetricsTrackerImpl}
+import com.hypertino.metrics.{MetricsTracker, MetricsTrackerImpl}
 import scaldi.Module
 
 class MetricsModule extends Module {

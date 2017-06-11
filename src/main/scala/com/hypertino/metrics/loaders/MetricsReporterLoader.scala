@@ -1,4 +1,4 @@
-package eu.inn.metrics.loaders
+package com.hypertino.metrics.loaders
 
 trait MetricsReporterLoader {
   def run(): Unit

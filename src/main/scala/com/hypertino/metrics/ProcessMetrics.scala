@@ -1,4 +1,4 @@
-package eu.inn.metrics
+package com.hypertino.metrics
 
 import java.lang.management.ManagementFactory
 import com.sun.management.{OperatingSystemMXBean, UnixOperatingSystemMXBean}

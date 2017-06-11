@@ -1,4 +1,4 @@
-package eu.inn.metrics
+package com.hypertino.metrics
 
 import com.codahale.metrics._
 

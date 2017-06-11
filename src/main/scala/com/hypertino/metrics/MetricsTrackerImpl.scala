@@ -1,4 +1,4 @@
-package eu.inn.metrics
+package com.hypertino.metrics
 
 import java.util.concurrent.atomic.AtomicReference
 

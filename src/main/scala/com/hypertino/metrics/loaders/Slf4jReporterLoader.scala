@@ -1,4 +1,4 @@
-package eu.inn.metrics.loaders
+package com.hypertino.metrics.loaders
 
 import java.util.concurrent.TimeUnit
 
