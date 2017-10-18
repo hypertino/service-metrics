@@ -1,6 +1,6 @@
 name := "service-metrics"
 
-version := "0.3-SNAPSHOT"
+version := "0.3.0"
 
 organization := "com.hypertino"
 
